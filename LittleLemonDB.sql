@@ -16,6 +16,18 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Temporary view structure for view `anyview`
+--
+
+DROP TABLE IF EXISTS `anyview`;
+/*!50001 DROP VIEW IF EXISTS `anyview`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `anyview` AS SELECT 
+ 1 AS `MenuItems_Name`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `bookings`
 --
 
@@ -30,7 +42,7 @@ CREATE TABLE `bookings` (
   PRIMARY KEY (`Booking_ID`),
   KEY `Order_ID_idx` (`B_Order_ID`),
   CONSTRAINT `B_Order_ID` FOREIGN KEY (`B_Order_ID`) REFERENCES `orders` (`Order_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -55,7 +67,7 @@ CREATE TABLE `clients` (
   `ContactNumber` varchar(45) DEFAULT NULL,
   `Email` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`Client_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,6 +78,23 @@ LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `fourtablesview`
+--
+
+DROP TABLE IF EXISTS `fourtablesview`;
+/*!50001 DROP VIEW IF EXISTS `fourtablesview`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `fourtablesview` AS SELECT 
+ 1 AS `Client_ID`,
+ 1 AS `Client_Name`,
+ 1 AS `Order_ID`,
+ 1 AS `Total_Cost`,
+ 1 AS `Menu_Name`,
+ 1 AS `MenuItems_Name`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `menuitems`
@@ -79,7 +108,7 @@ CREATE TABLE `menuitems` (
   `MenuItems_Name` varchar(255) DEFAULT NULL,
   `Composition` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`MenuItems_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,11 +132,11 @@ CREATE TABLE `menus` (
   `Menu_Name` varchar(255) DEFAULT NULL,
   `Description` varchar(255) DEFAULT NULL,
   `Cost` decimal(5,2) DEFAULT NULL,
-  `MenuItem_ID` int NOT NULL,
+  `M_MenuItem_ID` int NOT NULL,
   PRIMARY KEY (`Menu_ID`),
-  KEY `MenuItem_ID_idx` (`MenuItem_ID`),
-  CONSTRAINT `MenuItem_ID` FOREIGN KEY (`MenuItem_ID`) REFERENCES `menuitems` (`MenuItems_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `MenuItem_ID_idx` (`M_MenuItem_ID`),
+  CONSTRAINT `MenuItem_ID` FOREIGN KEY (`M_MenuItem_ID`) REFERENCES `menuitems` (`MenuItems_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,7 +170,7 @@ CREATE TABLE `orders` (
   CONSTRAINT `O_Client_ID` FOREIGN KEY (`O_Client_ID`) REFERENCES `clients` (`Client_ID`),
   CONSTRAINT `O_Menu_ID` FOREIGN KEY (`O_Menu_ID`) REFERENCES `menus` (`Menu_ID`),
   CONSTRAINT `O_Staff_ID` FOREIGN KEY (`O_Staff_ID`) REFERENCES `staff` (`Staff_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,7 +197,7 @@ CREATE TABLE `orders_status` (
   PRIMARY KEY (`Orders_Status_ID`),
   KEY `Order_ID_idx` (`S_Order_ID`),
   CONSTRAINT `S_Order_ID` FOREIGN KEY (`S_Order_ID`) REFERENCES `orders` (`Order_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,6 +210,20 @@ LOCK TABLES `orders_status` WRITE;
 UNLOCK TABLES;
 
 --
+-- Temporary view structure for view `ordersview`
+--
+
+DROP TABLE IF EXISTS `ordersview`;
+/*!50001 DROP VIEW IF EXISTS `ordersview`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `ordersview` AS SELECT 
+ 1 AS `Order_ID`,
+ 1 AS `Quantity`,
+ 1 AS `Total_Cost`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `staff`
 --
 
@@ -191,11 +234,11 @@ CREATE TABLE `staff` (
   `Staff_ID` int NOT NULL,
   `Role` varchar(45) DEFAULT NULL,
   `Salary` decimal(5,2) DEFAULT NULL,
-  `Client_ID` int NOT NULL,
+  `Sf_Client_ID` int NOT NULL,
   PRIMARY KEY (`Staff_ID`),
-  KEY `Client_ID_idx` (`Client_ID`),
-  CONSTRAINT `Client_ID` FOREIGN KEY (`Client_ID`) REFERENCES `clients` (`Client_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `Client_ID_idx` (`Sf_Client_ID`),
+  CONSTRAINT `Client_ID` FOREIGN KEY (`Sf_Client_ID`) REFERENCES `clients` (`Client_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,6 +249,60 @@ LOCK TABLES `staff` WRITE;
 /*!40000 ALTER TABLE `staff` DISABLE KEYS */;
 /*!40000 ALTER TABLE `staff` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `anyview`
+--
+
+/*!50001 DROP VIEW IF EXISTS `anyview`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`Project_Admin_Meta`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `anyview` AS select `menuitems`.`MenuItems_Name` AS `MenuItems_Name` from `menuitems` where `menuitems`.`MenuItems_ID` in (select `menus`.`M_MenuItem_ID` from (`menus` join `orders` on((`menus`.`M_MenuItem_ID` = `menuitems`.`MenuItems_ID`))) where (`orders`.`Quantity` >= 2)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `fourtablesview`
+--
+
+/*!50001 DROP VIEW IF EXISTS `fourtablesview`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`Project_Admin_Meta`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `fourtablesview` AS select `clients`.`Client_ID` AS `Client_ID`,`clients`.`Client_Name` AS `Client_Name`,`orders`.`Order_ID` AS `Order_ID`,`orders`.`Total_Cost` AS `Total_Cost`,`menus`.`Menu_Name` AS `Menu_Name`,`menuitems`.`MenuItems_Name` AS `MenuItems_Name` from (((`orders` join `clients` on((`clients`.`Client_ID` = `orders`.`O_Client_ID`))) join `menus` on((`orders`.`O_Menu_ID` = `menus`.`Menu_ID`))) join `menuitems` on((`menuitems`.`MenuItems_ID` = `menus`.`M_MenuItem_ID`))) where (`orders`.`Total_Cost` >= 150) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `ordersview`
+--
+
+/*!50001 DROP VIEW IF EXISTS `ordersview`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`Project_Admin_Meta`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `ordersview` AS select `orders`.`Order_ID` AS `Order_ID`,`orders`.`Quantity` AS `Quantity`,`orders`.`Total_Cost` AS `Total_Cost` from `orders` where (`orders`.`Quantity` >= 2) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -216,4 +313,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-17 11:09:32
+-- Dump completed on 2023-04-17 14:44:07
