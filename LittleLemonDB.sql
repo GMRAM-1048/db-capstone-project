@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `littlelemondb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `littlelemondb`;
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: littlelemondb
@@ -70,28 +68,55 @@ LOCK TABLES `clients` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `menu`
+-- Table structure for table `menuitems`
 --
 
-DROP TABLE IF EXISTS `menu`;
+DROP TABLE IF EXISTS `menuitems`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `menu` (
-  `Menu_ID` int NOT NULL,
-  `Menu_Name` varchar(255) DEFAULT NULL,
-  `Description` varchar(255) DEFAULT NULL,
-  `Cost` decimal(5,2) DEFAULT NULL,
-  PRIMARY KEY (`Menu_ID`)
+CREATE TABLE `menuitems` (
+  `MenuItems_ID` int NOT NULL,
+  `MenuItems_Name` varchar(255) DEFAULT NULL,
+  `Composition` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`MenuItems_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `menu`
+-- Dumping data for table `menuitems`
 --
 
-LOCK TABLES `menu` WRITE;
-/*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-/*!40000 ALTER TABLE `menu` ENABLE KEYS */;
+LOCK TABLES `menuitems` WRITE;
+/*!40000 ALTER TABLE `menuitems` DISABLE KEYS */;
+/*!40000 ALTER TABLE `menuitems` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `menus`
+--
+
+DROP TABLE IF EXISTS `menus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `menus` (
+  `Menu_ID` int NOT NULL,
+  `Menu_Name` varchar(255) DEFAULT NULL,
+  `Description` varchar(255) DEFAULT NULL,
+  `Cost` decimal(5,2) DEFAULT NULL,
+  `MenuItem_ID` int NOT NULL,
+  PRIMARY KEY (`Menu_ID`),
+  KEY `MenuItem_ID_idx` (`MenuItem_ID`),
+  CONSTRAINT `MenuItem_ID` FOREIGN KEY (`MenuItem_ID`) REFERENCES `menuitems` (`MenuItems_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `menus`
+--
+
+LOCK TABLES `menus` WRITE;
+/*!40000 ALTER TABLE `menus` DISABLE KEYS */;
+/*!40000 ALTER TABLE `menus` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -114,7 +139,7 @@ CREATE TABLE `orders` (
   KEY `Staff_ID_idx` (`O_Staff_ID`),
   KEY `Menu_ID_idx` (`O_Menu_ID`),
   CONSTRAINT `O_Client_ID` FOREIGN KEY (`O_Client_ID`) REFERENCES `clients` (`Client_ID`),
-  CONSTRAINT `O_Menu_ID` FOREIGN KEY (`O_Menu_ID`) REFERENCES `menu` (`Menu_ID`),
+  CONSTRAINT `O_Menu_ID` FOREIGN KEY (`O_Menu_ID`) REFERENCES `menus` (`Menu_ID`),
   CONSTRAINT `O_Staff_ID` FOREIGN KEY (`O_Staff_ID`) REFERENCES `staff` (`Staff_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -191,4 +216,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-12 13:22:29
+-- Dump completed on 2023-04-17 11:09:32
