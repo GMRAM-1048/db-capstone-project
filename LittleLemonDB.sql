@@ -39,8 +39,11 @@ CREATE TABLE `bookings` (
   `Booking_Date` datetime DEFAULT NULL,
   `TableNum` int DEFAULT NULL,
   `B_Order_ID` int DEFAULT NULL,
+  `B_Client_ID` int DEFAULT NULL,
   PRIMARY KEY (`Booking_ID`),
   KEY `Order_ID_idx` (`B_Order_ID`),
+  KEY `B_Client_ID_idx` (`B_Client_ID`),
+  CONSTRAINT `B_Client_ID` FOREIGN KEY (`B_Client_ID`) REFERENCES `clients` (`Client_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `B_Order_ID` FOREIGN KEY (`B_Order_ID`) REFERENCES `orders` (`Order_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -313,4 +316,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-17 14:44:07
+-- Dump completed on 2023-04-18 13:44:46
